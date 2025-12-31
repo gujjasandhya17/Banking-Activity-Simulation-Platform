@@ -1,65 +1,57 @@
-🏦 Banking Activity Simulation Platform
-📌 Project Overview
+# 🏦 Banking Activity Simulation Platform
 
-The Banking Activity Simulation Platform is a Java-based console application that simulates core banking operations in a structured and realistic manner.
-The project is designed to demonstrate object-oriented programming, exception handling, layered architecture, database interaction, file handling, and email integration.
+## 📌 Project Overview
 
-This application mimics how a real banking backend works by separating responsibilities into Repository, Service, Utility, and Model layers.
+The **Banking Activity Simulation Platform** is a Java-based console application that simulates core banking operations in a structured and realistic manner.  
+The project demonstrates:
 
+- Object-Oriented Programming (OOP)
+- Exception Handling
+- Layered Architecture
+- Database Interaction
+- File Handling
+- Email Integration
 
-🎯 Project Objectives
+This application mimics a real banking backend by separating responsibilities into **Repository, Service, Utility, and Model layers**.
 
-To understand real-world banking workflows
+---
 
-To implement clean, modular Java code
+## 🎯 Project Objectives
 
-To practice exception-driven programming
+- Understand real-world banking workflows  
+- Implement clean, modular Java code  
+- Practice exception-driven programming  
+- Integrate database, file system, and email services  
+- Build a project suitable for academic and professional evaluation  
 
-To integrate database, file system, and email services
+---
 
-To build a project suitable for academic and professional evaluation
+## ⚙️ Functional Features
 
+### ✔ Account Management
+- Create bank accounts with unique account numbers  
+- Store account holder name, email, and balance  
+- Retrieve account details securely  
 
-⚙️ Functional Features
+### ✔ Transaction Operations
+- Deposit money  
+- Withdraw money with balance validation  
+- Transfer money between accounts  
+- Prevent invalid and negative transactions  
 
-✔ Account Management
+### ✔ Alert System
+- Automatic low-balance email alerts  
+- Configurable balance threshold  
+- Email sent to the registered account holder  
 
-Create bank accounts with unique account numbers
+### ✔ Reporting & Logging
+- Transaction details stored in **MySQL database**  
+- Transaction history written to a **text file**  
+- Console logs for user visibility  
 
-Store account holder name, email, and balance
+---
 
-Retrieve account details securely
-
-✔ Transaction Operations
-
-Deposit money
-
-Withdraw money with balance validation
-
-Transfer money between accounts
-
-Prevent invalid and negative transactions
-
-✔ Alert System
-
-Automatic low-balance email alerts
-
-Configurable balance threshold
-
-Email sent to registered account holder
-
-✔ Reporting & Logging
-
-Transaction details stored in MySQL database
-
-Transaction history written to a text file
-
-Console logs for user visibility
-
-🧱 System Architecture
-
-The project follows a layered architecture, ensuring separation of concerns:
-
+## 🧱 System Architecture
 Presentation Layer
 └── BankingApplication (Console Menu)
 
@@ -81,72 +73,56 @@ Model & Exceptions
 ├── Account
 └── Custom Exception Classes
 
-🛠 Technologies Used
-Technology	Purpose
-Java	Core application logic
-JDBC	Database connectivity
-MySQL	Transaction storage
-JavaMail API	Email alerts
-File I/O	Transaction reports
-Git & GitHub	Version control
-🧪 Exception Handling
+
+---
+
+## 🛠 Technologies Used
+
+| Technology | Purpose |
+|---------|--------|
+| Java | Core application logic |
+| JDBC | Database connectivity |
+| MySQL | Transaction storage |
+| JavaMail API | Email alerts |
+| File I/O | Transaction reports |
+| Git & GitHub | Version control |
+
+---
+
+## 🧪 Exception Handling
 
 Custom exceptions are used to ensure safe and controlled execution:
 
-InvalidAmountException
-
-AccountNotFoundException
-
-InsufficientBalanceException
+- `InvalidAmountException`
+- `AccountNotFoundException`
+- `InsufficientBalanceException`
 
 This prevents system crashes and improves user experience.
 
+---
 
-📧 Email Alert Mechanism
+## 📧 Email Alert Mechanism
 
-Uses SMTP with Gmail
+- Uses **SMTP with Gmail**
+- Sends alerts when account balance falls below a predefined threshold
+- Demonstrates real-time notification systems used in banking applications
 
-Sends alerts when account balance falls below a predefined threshold
+---
 
-Demonstrates real-time notification systems used in banking
-
-
-📄 File Reporting
+## 📄 File Reporting
 
 Every transaction is logged into:
 
-records/transaction_report.txt
 
+This simulates **audit logs** used in real banking systems.
 
-This simulates audit logs used in real banking systems.
+---
 
+## ▶️ How to Execute the Application
 
-▶️ How to Execute the Application
-
-Clone the repository:
-
+### 1️⃣ Clone the Repository
+```bash
 git clone https://github.com/gujjasandhya17/Banking-Activity-Simulation-Platform.git
-
-
-Configure:
-
-MySQL database
-
-Email credentials (App Password)
-
-Run:
-
-BankingApplication.java
-
-
-📋 Sample Console Menu
-1. Create Account
-2. Deposit Money
-3. Withdraw Money
-4. Transfer Money
-5. Show Account Details
-6. List All Accounts
-7. Exit
 
 
 📚 Learning Outcomes
@@ -159,10 +135,9 @@ Applying object-oriented principles
 
 Handling real-world exceptions
 
-Integrating external services (Email, DB)
+Integrating external services (Email & Database)
 
 Writing maintainable and readable code
-
 
 🔮 Future Enhancements
 
@@ -174,4 +149,7 @@ Authentication & authorization
 
 Transaction history viewer
 
-PDF/Excel report generation
+PDF / Excel report generation
+
+The project follows a **layered architecture**, ensuring separation of concerns:
+
