@@ -53,23 +53,28 @@ This application mimics a real banking backend by separating responsibilities in
 
 ## 🧱 System Architecture
 Presentation Layer
+
 └── BankingApplication (Console Menu)
 
 Service Layer
+
 ├── AccountService
 ├── TransactionService
 └── AlertService
 
 Repository Layer
+
 ├── AccountRepository
 └── TransactionRepository
 
 Utility Layer
+
 ├── DBConnection
 ├── FileReportUtil
 └── EmailUtil
 
 Model & Exceptions
+
 ├── Account
 └── Custom Exception Classes
 
@@ -125,31 +130,24 @@ This simulates **audit logs** used in real banking systems.
 git clone https://github.com/gujjasandhya17/Banking-Activity-Simulation-Platform.git
 
 
-📚 Learning Outcomes
+## 📚 Learning Outcomes
 
 Through this project, I gained hands-on experience in:
 
-Designing scalable Java applications
+- Designing scalable Java applications  
+- Applying object-oriented programming principles  
+- Handling real-world exceptions effectively  
+- Integrating external services such as **Email** and **Database (MySQL)**  
+- Writing clean, maintainable, and readable code  
 
-Applying object-oriented principles
+---
 
-Handling real-world exceptions
+## 🔮 Future Enhancements
 
-Integrating external services (Email & Database)
+The following features can be added to improve and extend the project:
 
-Writing maintainable and readable code
-
-🔮 Future Enhancements
-
-Web version using Spring Boot
-
-REST APIs
-
-Authentication & authorization
-
-Transaction history viewer
-
-PDF / Excel report generation
-
-The project follows a **layered architecture**, ensuring separation of concerns:
-
+- Web-based version using **Spring Boot**  
+- RESTful APIs for banking operations  
+- User authentication and authorization  
+- Transaction history viewer with filters  
+- PDF / Excel report generation for transactions  
