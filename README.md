@@ -59,23 +59,29 @@ Presentation Layer
 Service Layer
 
 ├── AccountService
+
 ├── TransactionService
+
 └── AlertService
 
 Repository Layer
 
 ├── AccountRepository
+
 └── TransactionRepository
 
 Utility Layer
 
 ├── DBConnection
+
 ├── FileReportUtil
+
 └── EmailUtil
 
 Model & Exceptions
 
 ├── Account
+
 └── Custom Exception Classes
 
 
@@ -123,13 +129,6 @@ This simulates **audit logs** used in real banking systems.
 
 ---
 
-## ▶️ How to Execute the Application
-
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/gujjasandhya17/Banking-Activity-Simulation-Platform.git
-
-
 ## 📚 Learning Outcomes
 
 Through this project, I gained hands-on experience in:
@@ -150,4 +149,13 @@ The following features can be added to improve and extend the project:
 - RESTful APIs for banking operations  
 - User authentication and authorization  
 - Transaction history viewer with filters  
-- PDF / Excel report generation for transactions  
+- PDF / Excel report generation for transactions
+
+---
+
+## ▶️ How to Execute the Application
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/gujjasandhya17/Banking-Activity-Simulation-Platform.git
+
