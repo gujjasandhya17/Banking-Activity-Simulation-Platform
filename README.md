@@ -6,6 +6,7 @@ The project is designed to demonstrate object-oriented programming, exception ha
 
 This application mimics how a real banking backend works by separating responsibilities into Repository, Service, Utility, and Model layers.
 
+
 🎯 Project Objectives
 
 To understand real-world banking workflows
@@ -18,7 +19,9 @@ To integrate database, file system, and email services
 
 To build a project suitable for academic and professional evaluation
 
+
 ⚙️ Functional Features
+
 ✔ Account Management
 
 Create bank accounts with unique account numbers
@@ -98,6 +101,7 @@ InsufficientBalanceException
 
 This prevents system crashes and improves user experience.
 
+
 📧 Email Alert Mechanism
 
 Uses SMTP with Gmail
@@ -105,6 +109,7 @@ Uses SMTP with Gmail
 Sends alerts when account balance falls below a predefined threshold
 
 Demonstrates real-time notification systems used in banking
+
 
 📄 File Reporting
 
@@ -114,6 +119,7 @@ records/transaction_report.txt
 
 
 This simulates audit logs used in real banking systems.
+
 
 ▶️ How to Execute the Application
 
@@ -132,6 +138,7 @@ Run:
 
 BankingApplication.java
 
+
 📋 Sample Console Menu
 1. Create Account
 2. Deposit Money
@@ -140,6 +147,7 @@ BankingApplication.java
 5. Show Account Details
 6. List All Accounts
 7. Exit
+
 
 📚 Learning Outcomes
 
@@ -154,6 +162,7 @@ Handling real-world exceptions
 Integrating external services (Email, DB)
 
 Writing maintainable and readable code
+
 
 🔮 Future Enhancements
 
