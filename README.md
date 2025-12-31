@@ -153,8 +153,6 @@ The following features can be added to improve and extend the project:
 
 ---
 
-## ▶️ How to Execute the Application
-
 ### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/gujjasandhya17/Banking-Activity-Simulation-Platform.git
