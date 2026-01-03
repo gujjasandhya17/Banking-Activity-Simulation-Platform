@@ -7,7 +7,7 @@ import java.util.Collection;
 import com.bank.BankSimulator.exception.InvalidAmountException;
 import com.bank.BankSimulator.exception.AccountNotFoundException;
 import com.bank.BankSimulator.model.Account;
-import com.bank.BankSimulator.respository.AccountRepository;
+import com.bank.BankSimulator.repository.AccountRepository;
 
 public class AccountService {
 	private AccountRepository repo;

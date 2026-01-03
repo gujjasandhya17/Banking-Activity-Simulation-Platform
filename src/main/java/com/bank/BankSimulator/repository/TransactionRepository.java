@@ -1,4 +1,4 @@
-package com.bank.BankSimulator.respository;
+package com.bank.BankSimulator.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

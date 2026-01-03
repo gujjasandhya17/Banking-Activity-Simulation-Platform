@@ -7,7 +7,7 @@ import com.bank.BankSimulator.exception.AccountNotFoundException;
 import com.bank.BankSimulator.exception.InsufficientBalanceException;
 import com.bank.BankSimulator.exception.InvalidAmountException;
 import com.bank.BankSimulator.model.Account;
-import com.bank.BankSimulator.respository.TransactionRepository;
+import com.bank.BankSimulator.repository.TransactionRepository;
 import com.bank.BankSimulator.util.FileReportUtil;
 
 public class TransactionService {

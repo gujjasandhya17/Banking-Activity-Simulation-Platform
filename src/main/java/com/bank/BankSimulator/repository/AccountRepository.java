@@ -1,4 +1,4 @@
-package com.bank.BankSimulator.respository;
+package com.bank.BankSimulator.repository;
 
 import java.util.Collection;
 import java.util.HashMap;
