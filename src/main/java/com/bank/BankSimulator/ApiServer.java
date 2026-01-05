@@ -1,12 +1,15 @@
 package com.bank.BankSimulator;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import static spark.Spark.*;
 
 import com.bank.BankSimulator.repository.AccountRepository;
 import com.bank.BankSimulator.repository.TransactionRepository;
+import com.bank.BankSimulator.exception.AccountNotFoundException;
 import com.bank.BankSimulator.model.Account;
 import com.bank.BankSimulator.service.AccountService;
 import com.bank.BankSimulator.service.AlertService;
@@ -46,6 +49,7 @@ public class ApiServer {
 		});
 		
         post("/accounts/deposit", (req, res) -> {
+        	System.out.println("/accounts/deposit api is called");
             res.type("application/json");
 
             TxRequest data = gson.fromJson(req.body(), TxRequest.class);
@@ -56,8 +60,59 @@ public class ApiServer {
             );
         });
 
+       post("/accounts/withdraw",(req,res)->{
+    	   System.out.println("/accounts/withdraw api is called");
+    	   res.type("application/json");
+    	   TxRequest data = gson.fromJson(req.body(), TxRequest.class);
+    	   trxService.withdraw(data.accNo, data.amount);
+    	   return gson.toJson(
+                   Map.of("message", "Withdraw successful")
+               );
+    	   
+       });
        
-        
+       post("/accounts/transfer",(req,res)->{
+    	   System.out.println("/accounts/transfer api is called"); 
+    	   res.type("application/json");
+    	   
+    	   TransferRequest data = gson.fromJson(req.body(), TransferRequest.class);
+		   trxService.transfer(data.fromAcc, data.toAcc, data.amount);
+		   
+		   return gson.toJson(
+                   Map.of("message", "Transfer successful")
+               );
+       });
+       
+       get("/accounts/all", (req, res) -> {
+    	    res.type("application/json");
+    	    try {
+    	        Collection<Account> accounts = accountService.listAll();
+    	        return gson.toJson(new ArrayList<>(accounts));
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
+    	        res.status(500);
+    	        return gson.toJson(Map.of("error", e.getMessage()));
+    	    }
+    	});
+       
+       get("/accounts/:accNo", (req, res) ->{
+    	   System.out.println("/accounts/:accNo api is called"); 
+    	   res.type("application/json");
+    	   
+    	   String accNo = req.params(":accNo");
+
+    	   try {
+    	        Account account = accountService.getAccount(accNo);
+    	        return gson.toJson(account);
+    	    } catch (AccountNotFoundException e) {
+    	        res.status(404);
+    	        return gson.toJson(Map.of("error", e.getMessage()));
+    	    }
+       });
+       
+      
+
+       
 	}
 
  
@@ -73,6 +128,12 @@ public class ApiServer {
     	 String accNo;
     	 BigDecimal amount;
     }
+    
+    static class TransferRequest{
+		String fromAcc;
+		String toAcc;
+		BigDecimal amount;
+	}
   
 		 
 }

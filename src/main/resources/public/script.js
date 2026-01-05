@@ -66,11 +66,21 @@ function withdrawMoney(){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
-    .then(response => response.text())
-    .then(msg => {
-        document.getElementById("withdraw-result").innerText = msg;
-            console.log("Amount is withdrawn successfully..!");
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Withdraw failed");
+        }
+        return response.json(); // ✅ parse JSON
     })
+    .then(result => {
+        document.getElementById("withdraw-result").innerText = result.message;
+        console.log("Amount is withdrawn successfully..!");
+    })
+    .catch(error => {
+        document.getElementById("withdraw-result").innerText =
+            "Error while withdrawing amount";
+        console.error(error);
+    });
 }
 
 // Transfer
@@ -85,25 +95,49 @@ function transferMoney(){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
-    .then(response => response.text())
-    .then(msg => {
-        document.getElementById("transfer-result").innerText = msg;
-            console.log("Amount is transferred successfully..!");
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Transfer failed");
+        }
+        return response.json(); // ✅ parse JSON
     })
+    .then(result => {
+        document.getElementById("transfer-result").innerText = result.message;
+        console.log("Amount is transferred successfully..!");
+    })
+    .catch(error => {
+        document.getElementById("transfer-result").innerText =
+            "Error while transferring amount";
+        console.error(error);
+    });
 }
 
 // View Account
 function viewAccount(){
     const accNo = document.getElementById("v-acc").value;
-    fetch(BASE_URL+"/accounts/"+accNo, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" }
+
+    fetch(BASE_URL + "/accounts/" + accNo)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Account not found");
+        }
+        return response.json();
     })
-    .then(response => response.json())
-    .then(result => {
-        document.getElementById("view-result").innerText = JSON.stringify(result, null, 2);
+    .then(account => {
+        document.getElementById("view-result").innerHTML = `
+            <b>Account Number:</b> ${account.accountNumber}<br>
+            <b>Account Holder:</b> ${account.holderName}<br>
+            <b>Email:</b> ${account.email}<br>
+            <b>Balance:</b> ₹${account.balance}
+        `;
     })
+    .catch(error => {
+        document.getElementById("view-result").innerText =
+            "Account not found";
+        console.error(error);
+    });
 }
+
 
 // View All Accounts
 function viewAllAccounts(){
@@ -111,8 +145,39 @@ function viewAllAccounts(){
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-    .then(response => response.json())
-    .then(result => {
-        document.getElementById("viewall-result").innerText = JSON.stringify(result, null, 2);
+     .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to fetch accounts");
+        }
+        return response.json();
     })
+    .then(accounts => {
+        let output = `
+            <table border="1" cellpadding="8">
+                <tr>
+                    <th>Account Number</th>
+                    <th>Holder Name</th>
+                    <th>Email</th>
+                    <th>Balance</th>
+                </tr>
+        `;
+        
+         accounts.forEach(acc => {
+            output += `
+                <tr>
+                    <td>${acc.accountNumber}</td>
+                    <td>${acc.holderName}</td>
+                    <td>${acc.email}</td>
+                    <td>₹${acc.balance}</td>
+                </tr>
+            `;
+        });
+
+        output += `</table>`;
+        document.getElementById("viewall-result").innerHTML = output;
+    })
+    .catch(error => {
+        document.getElementById("viewall-result").innerText =
+            "Error loading accounts";
+    });
 }
