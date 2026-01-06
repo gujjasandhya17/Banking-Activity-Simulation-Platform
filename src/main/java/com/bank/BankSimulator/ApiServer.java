@@ -22,7 +22,12 @@ public class ApiServer {
 	
 	public static void main(String[] args) {
 
-		port(8085);
+		 String portStr = System.getenv("PORT");
+	        if (portStr != null) {
+	            port(Integer.parseInt(portStr));
+	        } else {
+	            port(8085); // local development
+	        }
 		staticFiles.location("/public");
 
 
