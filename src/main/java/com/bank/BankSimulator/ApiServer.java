@@ -25,9 +25,18 @@ public class ApiServer {
 	public static void main(String[] args) {
 
 		 
-	            port(8085); // local development
-
+	            int port=8085; // local development
+	            String portEnv = System.getenv("PORT");
+	            if (portEnv != null) {
+	                port = Integer.parseInt(portEnv);
+	            }
+	            port(port);
 	            staticFiles.location("/public");
+	            
+	            get("/", (req, res) -> "Bank Simulator Running!");
+
+	            System.out.println("Server started on port " + port);
+	           
 
 	           
 
