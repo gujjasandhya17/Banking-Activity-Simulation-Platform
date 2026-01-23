@@ -72,8 +72,8 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <!-- Replace with your main class -->
-              <mainClass>com.bank.BankSimulator.Main</mainClass>
+              <!-- FIXED: main class points to ApiServer -->
+              <mainClass>com.bank.BankSimulator.ApiServer</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -93,7 +93,8 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>com.bank.BankSimulator.Main</mainClass>
+                  <!-- FIXED: main class points to ApiServer -->
+                  <mainClass>com.bank.BankSimulator.ApiServer</mainClass>
                 </transformer>
               </transformers>
             </configuration>

@@ -149,7 +149,7 @@ public class BankingApplication {
 				
 		}*/
 		
-		int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+		int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8085"));
         port(port);
 
         AccountRepository accRepo = new AccountRepository();
