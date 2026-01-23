@@ -1,4 +1,6 @@
 package com.bank.BankSimulator;
+import com.bank.BankSimulator.auth.AuthController;
+import com.bank.BankSimulator.util.AuthFilter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,13 +24,15 @@ public class ApiServer {
 	
 	public static void main(String[] args) {
 
-		 String portStr = System.getenv("PORT");
-	        if (portStr != null) {
-	            port(Integer.parseInt(portStr));
-	        } else {
+		 
 	            port(8085); // local development
-	        }
-		staticFiles.location("/public");
+	      
+	            staticFiles.location("/public");
+
+	           
+
+		AuthController.routes();
+		AuthFilter.apply();
 
 
         Gson gson = new Gson();

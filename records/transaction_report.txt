@@ -39,3 +39,16 @@ TRANSFER | FromAcc: 1000000 | ToAccount: 1000001 | Amount 1000
 DEPOSITE | Acc: 1000000 | Amount: 90
 WITHDRAW | Acc: 1000000 | Amount: 10
 TRANSFER | FromAcc: 1000000 | ToAccount: 1000001 | Amount 1000
+DEPOSITE | Acc: 1000000 | Amount: 90
+WITHDRAW | Acc: 1000000 | Amount: 10
+DEPOSITE | Acc: 1000002 | Amount: 90
+WITHDRAW | Acc: 1000002 | Amount: 90
+TRANSFER | FromAcc: 1000002 | ToAccount: 1000003 | Amount 1000
+DEPOSITE | Acc: 1000000 | Amount: 90
+WITHDRAW | Acc: 1000000 | Amount: 1000
+TRANSFER | FromAcc: 1000000 | ToAccount: 1000001 | Amount 1000
+DEPOSITE | Acc: 1000001 | Amount: 90
+WITHDRAW | Acc: 1000000 | Amount: 1000
+TRANSFER | FromAcc: 1000000 | ToAccount: 1000001 | Amount 5000
+WITHDRAW | Acc: 1000000 | Amount: 1000
+TRANSFER | FromAcc: 1000000 | ToAccount: 1000001 | Amount 5000
