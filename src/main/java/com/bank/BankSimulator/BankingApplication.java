@@ -12,12 +12,12 @@ import com.bank.BankSimulator.repository.TransactionRepository;
 import com.bank.BankSimulator.service.AccountService;
 import com.bank.BankSimulator.service.AlertService;
 import com.bank.BankSimulator.service.TransactionService;
-
+import static spark.Spark.*;
 public class BankingApplication {
 	
 	public static void main(String[] args) {
 		
-		Scanner sc = new Scanner(System.in);
+	/*	Scanner sc = new Scanner(System.in);
 		AccountRepository accRepo = new AccountRepository();
 		AccountService accService = new AccountService(accRepo);
 		TransactionRepository trxRepo = new TransactionRepository();
@@ -147,7 +147,24 @@ public class BankingApplication {
 		}	
 				
 				
-		}
+		}*/
+		
+		int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+        port(port);
+
+        AccountRepository accRepo = new AccountRepository();
+        AccountService accService = new AccountService(accRepo);
+
+        // Create Account endpoint
+        post("/createAccount", (req, res) -> {
+            String name = req.queryParams("name");
+            String email = req.queryParams("email");
+            BigDecimal openingBalance = new BigDecimal(req.queryParams("balance"));
+            Account account = accService.createAccount(name, email, openingBalance);
+            return "Account created: " + account.getAccountNumber();
+        });
+
+        get("/hello", (req, res) -> "Bank Simulator Running!");
 
 	}
 	
