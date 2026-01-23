@@ -26,6 +26,7 @@ public class ApiServer {
 
 		 
 	            port(8085); // local development
+<<<<<<< HEAD
 	      
 	            staticFiles.location("/public");
 
@@ -33,6 +34,9 @@ public class ApiServer {
 
 		AuthController.routes();
 		AuthFilter.apply();
+=======
+	       
+>>>>>>> 0199d7b66a8911eaf89dd47aac032a9dd97a23f5
 
 
         Gson gson = new Gson();
