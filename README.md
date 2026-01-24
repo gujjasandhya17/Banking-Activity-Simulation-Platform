@@ -162,15 +162,13 @@ git clone https://github.com/gujjasandhya17/Banking-Activity-Simulation-Platform
 
 ---
 
-### 🚀 Live Deployment (Railway)
+🚀 Live Deployment (Railway)
 
-The **Banking Activity Simulation Platform** is deployed on **Railway** and accessible at:
+The Banking Activity Simulation Platform is deployed on Railway and accessible at:
 
-🔗 **Live URL:**  
+🔗 Live URL:
 https://banking-activity-simulation-platform-production.up.railway.app
 
-> ⚠️ **Note:**  
-> This application exposes **backend APIs (Spark Java)** and does **not have a UI**.  
-> Use **Postman** or **browser endpoints** to test the APIs.
-
-
+⚠️ Note:
+This application exposes backend APIs (Spark Java) and does not have a UI.
+Use Postman or browser endpoints to test the APIs.
