@@ -156,7 +156,7 @@ The following features can be added to improve and extend the project:
 
 ---
 
-🚀 Live Deployment (Railway)
+##🚀 Live Deployment (Railway)
 
 The Banking Activity Simulation Platform is deployed on Railway and accessible at:
 
