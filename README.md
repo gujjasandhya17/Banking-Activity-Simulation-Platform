@@ -163,11 +163,6 @@ The **Banking Activity Simulation Platform** is deployed on **Railway** and acce
 🔗 **Live URL:**  
 👉 [https://banking-activity-simulation-platform-production.up.railway.app](https://banking-activity-simulation-platform-production.up.railway.app)
 
-⚠️ **Note:**  
-- This application exposes backend APIs (**Spark Java**) and does **not have a UI**.  
-- Use **Postman** or **browser endpoints** to test the APIs.
-
-
 ---
 
 ### 1️⃣ Clone the Repository
