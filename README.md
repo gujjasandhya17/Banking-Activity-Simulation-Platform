@@ -160,7 +160,9 @@ The following features can be added to improve and extend the project:
 ```bash
 git clone https://github.com/gujjasandhya17/Banking-Activity-Simulation-Platform.git
 
-## 🚀 Live Deployment (Railway)
+---
+
+### 🚀 Live Deployment (Railway)
 
 The Banking Activity Simulation Platform is deployed on **Railway** and accessible at:
 
