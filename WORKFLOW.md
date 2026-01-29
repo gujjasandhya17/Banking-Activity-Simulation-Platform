@@ -730,8 +730,8 @@ The transfer operation is thread-safe because:
 ┌─────────────────────────────────────┐
 │  Create Mail Session                │
 │  - Authenticator with credentials   │
-│  - FROM_EMAIL: 17sandhya23@gmail.com│
-│  - APP_PASSWORD: (Gmail app pwd)    │
+│  - FROM_EMAIL: [FROM_EMAIL_ADDRESS] │
+│  - APP_PASSWORD: [APP_PASSWORD]     │
 └──────────────┬──────────────────────┘
                │
                ▼

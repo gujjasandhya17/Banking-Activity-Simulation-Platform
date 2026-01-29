@@ -98,7 +98,7 @@ The application can run as:
 - **EmailUtil**: Sends email notifications via Gmail SMTP
 - **FileReportUtil**: Writes transaction logs to text files
 - **DBConnection**: Manages database connections
-- **AuthFilter**: JWT token validation for secured endpoints
+- **AuthFilter**: Token validation for secured endpoints
 
 ---
 
@@ -378,8 +378,8 @@ Database connection management using JDBC.
 ```java
 public class DBConnection {
     private static final String url = "jdbc:mysql://localhost:3306/banking_simulator";
-    private static final String username = "root";
-    private static final String password = "1234";
+    private static final String username = "[DB_USERNAME]";
+    private static final String password = "[DB_PASSWORD]";
     
     public static Connection getConnection()
 }
@@ -400,8 +400,8 @@ Sends email notifications using Gmail SMTP.
 
 ```java
 public class EmailUtil {
-    private static final String FROM_EMAIL = "17sandhya23@gmail.com";
-    private static final String APP_PASSWORD = "voprfyfdhepbthce";
+    private static final String FROM_EMAIL = "[FROM_EMAIL]";
+    private static final String APP_PASSWORD = "[APP_PASSWORD]";
     
     public static void sendEmail(String to, String subject, String body)
 }
@@ -423,8 +423,9 @@ EmailUtil.sendEmail(
 ```
 
 **⚠️ Security Note:**
-- App password is hardcoded (NOT recommended for production)
-- Should use environment variables or secure configuration management
+- Credentials should NEVER be hardcoded (NOT recommended for production)
+- Always use environment variables or secure configuration management
+- The actual source code contains hardcoded credentials which should be refactored
 
 ---
 
