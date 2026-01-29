@@ -2,6 +2,25 @@
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://banking-activity-simulation-platform-production.up.railway.app)
 
+---
+
+## 📚 Comprehensive Documentation Available!
+
+**NEW!** Complete documentation explaining the entire project is now available:
+
+📖 **[DOCUMENTATION_INDEX.md](./DOCUMENTATION_INDEX.md)** - Start here for guided documentation
+
+- **[CODE_EXPLANATION.md](./CODE_EXPLANATION.md)** - Detailed code analysis and architecture (29 KB)
+- **[WORKFLOW.md](./WORKFLOW.md)** - Complete workflows and process flows (47 KB)
+
+These guides include:
+- ✅ Complete architecture diagrams
+- ✅ Component-by-component code explanation
+- ✅ API reference with examples
+- ✅ End-to-end workflow scenarios
+- ✅ Security analysis and recommendations
+
+---
 
 ## 📌 Project Overview
 
