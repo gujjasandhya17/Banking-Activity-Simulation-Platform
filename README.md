@@ -1,5 +1,8 @@
 # 🏦 Banking Activity Simulation Platform
 
+[![Deploy on Railway](https://railway.app/button.svg)](https://banking-activity-simulation-platform-production.up.railway.app)
+
+
 ## 📌 Project Overview
 
 The **Banking Activity Simulation Platform** is a Java-based console application that simulates core banking operations in a structured and realistic manner.  
@@ -152,6 +155,17 @@ The following features can be added to improve and extend the project:
 - PDF / Excel report generation for transactions
 
 ---
+
+## 🚀 Live Deployment (Railway)
+
+The **Banking Activity Simulation Platform** is deployed on **Railway** and accessible at:
+
+🔗 **Live URL:**  
+👉 [https://banking-activity-simulation-platform-production.up.railway.app](https://banking-activity-simulation-platform-production.up.railway.app)
+
+
+---
+
 
 ### 1️⃣ Clone the Repository
 ```bash
