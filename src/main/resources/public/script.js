@@ -36,18 +36,32 @@ function createAccount() {
         balance: document.getElementById("c-balance").value
     };
 
+    const resultDiv = document.getElementById("create-result");
+
     fetch(BASE_URL + "/accounts/create", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
-    .then(handleUnauthorized)
-    .then(res => res.json())
-    .then(result => {
-        document.getElementById("create-result").innerText =
-            "Account created successfully. Account No: " + result.accountNumber;
+    .then(res => {
+        if (res.status === 401) {
+            window.location.href = "/auth/login.html";
+            throw new Error("Unauthorized");
+        }
+        if (!res.ok) throw new Error("Server error");
+        return res.json();
     })
-    .catch(err => console.error(err));
+    .then(result => {
+        resultDiv.innerText = "Account created successfully. Account No: " + result.accountNumber;
+        resultDiv.style.color = "#27ae60";
+        document.getElementById("c-name").value = "";
+        document.getElementById("c-email").value = "";
+        document.getElementById("c-balance").value = "";
+    })
+    .catch(err => {
+        resultDiv.innerText = "Error: " + err.message;
+        resultDiv.style.color = "#ff4757";
+    });
 }
 
 /* ---------------- DEPOSIT ---------------- */
@@ -57,17 +71,31 @@ function depositMoney() {
         amount: parseFloat(document.getElementById("d-amount").value)
     };
 
+    const resultDiv = document.getElementById("deposit-result");
+
     fetch(BASE_URL + "/accounts/deposit", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
-    .then(handleUnauthorized)
-    .then(res => res.json())
-    .then(result => {
-        document.getElementById("deposit-result").innerText = result.message;
+    .then(res => {
+        if (res.status === 401) {
+            window.location.href = "/auth/login.html";
+            throw new Error("Unauthorized");
+        }
+        if (!res.ok) throw new Error("Server error");
+        return res.json();
     })
-    .catch(err => console.error(err));
+    .then(result => {
+        resultDiv.innerText = result.message;
+        resultDiv.style.color = "#27ae60";
+        document.getElementById("d-acc").value = "";
+        document.getElementById("d-amount").value = "";
+    })
+    .catch(err => {
+        resultDiv.innerText = "Error: " + err.message;
+        resultDiv.style.color = "#ff4757";
+    });
 }
 
 /* ---------------- WITHDRAW ---------------- */
@@ -77,17 +105,35 @@ function withdrawMoney() {
         amount: parseFloat(document.getElementById("w-amount").value)
     };
 
+    const resultDiv = document.getElementById("withdraw-result");
+    console.log("Withdraw button clicked with data:", data);
+
     fetch(BASE_URL + "/accounts/withdraw", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
-    .then(handleUnauthorized)
-    .then(res => res.json())
-    .then(result => {
-        document.getElementById("withdraw-result").innerText = result.message;
+    .then(res => {
+        console.log("Withdraw response status:", res.status);
+        if (res.status === 401) {
+            window.location.href = "/auth/login.html";
+            throw new Error("Unauthorized");
+        }
+        if (!res.ok) throw new Error("Server error: " + res.status);
+        return res.json();
     })
-    .catch(err => console.error(err));
+    .then(result => {
+        console.log("Withdraw result:", result);
+        resultDiv.innerText = result.message;
+        resultDiv.style.color = "#27ae60";
+        document.getElementById("w-acc").value = "";
+        document.getElementById("w-amount").value = "";
+    })
+    .catch(err => {
+        console.error("Withdraw error:", err);
+        resultDiv.innerText = "Error: " + err.message;
+        resultDiv.style.color = "#ff4757";
+    });
 }
 
 /* ---------------- TRANSFER ---------------- */
@@ -98,17 +144,36 @@ function transferMoney() {
         amount: parseFloat(document.getElementById("t-amount").value)
     };
 
+    const resultDiv = document.getElementById("transfer-result");
+    console.log("Transfer button clicked with data:", data);
+
     fetch(BASE_URL + "/accounts/transfer", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
-    .then(handleUnauthorized)
-    .then(res => res.json())
-    .then(result => {
-        document.getElementById("transfer-result").innerText = result.message;
+    .then(res => {
+        console.log("Transfer response status:", res.status);
+        if (res.status === 401) {
+            window.location.href = "/auth/login.html";
+            throw new Error("Unauthorized");
+        }
+        if (!res.ok) throw new Error("Server error: " + res.status);
+        return res.json();
     })
-    .catch(err => console.error(err));
+    .then(result => {
+        console.log("Transfer result:", result);
+        resultDiv.innerText = result.message;
+        resultDiv.style.color = "#27ae60";
+        document.getElementById("t-from-acc").value = "";
+        document.getElementById("t-to-acc").value = "";
+        document.getElementById("t-amount").value = "";
+    })
+    .catch(err => {
+        console.error("Transfer error:", err);
+        resultDiv.innerText = "Error: " + err.message;
+        resultDiv.style.color = "#ff4757";
+    });
 }
 
 /* ---------------- VIEW ACCOUNT ---------------- */
