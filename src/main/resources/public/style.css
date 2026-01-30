@@ -250,6 +250,42 @@ button:hover {
     animation: fadeIn 0.4s ease;
 }
 
+/* Wide Section for View All Accounts */
+#viewall.section {
+    max-width: 92%;
+    padding: 45px 55px;
+    background: #fafbfd;
+    box-shadow: 0 8px 32px rgba(31, 60, 136, 0.08);
+}
+
+#viewall.section h2 {
+    font-size: 1.9rem;
+    margin-bottom: 30px;
+    color: #1f3c88;
+    font-weight: 700;
+    text-align: left;
+    letter-spacing: -0.5px;
+}
+
+#viewall.section button {
+    margin-bottom: 20px;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #1f3c88 0%, #2d5aa8 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(31, 60, 136, 0.2);
+}
+
+#viewall.section button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(31, 60, 136, 0.3);
+}
+
 /* Section Headings */
 .section h2 {
     text-align: center;
@@ -277,11 +313,36 @@ input:focus {
 #create-result,
 #deposit-result,
 #withdraw-result,
-#transfer-result {
-    margin-top: 15px;
-    font-weight: 500;
-    color: #1f3c88;
+#transfer-result25px;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(31, 60, 136, 0.08);
+    background: white;
+    animation: fadeInTable 0.6s ease;
+}
+
+/* Placeholder Message */
+.table-placeholder {
     text-align: center;
+    padding: 60px 40px;
+    color: #7f8c8d;
+    font-size: 16px;
+    font-weight: 500;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes fadeInTable {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Preformatted Output */
@@ -293,16 +354,7 @@ pre {
     overflow-x: auto;
 }
 
-/* Table Container */
-.table-container {
-    overflow-x: auto;
-    margin-top: 20px;
-}
-
-/* Account Details Card */
-.account-details-container {
-    margin-top: 20px;
-}
+/* Old Table Container - Remove Duplicate */
 
 .account-detail-card {
     background: white;
@@ -368,36 +420,62 @@ pre {
 /* Professional Accounts Table */
 .accounts-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    font-size: 14px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14.5px;
+    table-layout: fixed;
 }
 
 .accounts-table thead {
-    background: linear-gradient(135deg, #1f3c88 0%, #2d5aa8 100%);
-    color: white;
-    font-weight: 600;
+    background: linear-gradient(135deg, #f0f4f8 0%, #e8eef7 100%);
+    color: #1f3c88;
+}
+
+.accounts-table thead tr th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.accounts-table thead tr th:last-child {
+    border-top-right-radius: 12px;
 }
 
 .accounts-table th {
-    padding: 16px;
+    padding: 20px 24px;
     text-align: left;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2c3e50;
+    border-bottom: 2px solid #d5dce6;
+}
+
+.accounts-table th:nth-child(1) { 
+    width: 18%; 
+    text-align: center;
+}
+.accounts-table th:nth-child(2) { width: 28%; }
+.accounts-table th:nth-child(3) { width: 32%; }
+.accounts-table th:nth-child(4) { 
+    width: 22%; 
+    text-align: right;
 }
 
 .accounts-table tbody tr {
-    border-bottom: 1px solid #e5ecf7;
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+    border-bottom: 1px solid #f0f3f8;
+    transition: all 0.2s ease;
 }
 
 .accounts-table tbody tr:hover {
-    background: #f9fbfd;
-    box-shadow: inset 0 0 8px rgba(31, 60, 136, 0.06);
+    background: linear-gradient(90deg, #f8fbff 0%, #ffffff 100%);
+    box-shadow: 0 2px 8px rgba(31, 60, 136, 0.06);
+    transform: scale(1.002);
+}
+
+.accounts-table tbody tr:last-child {
+    border-bottom: none;
 }
 
 .accounts-table tbody tr.even {
@@ -405,22 +483,38 @@ pre {
 }
 
 .accounts-table tbody tr.odd {
-    background: #f8faff;
+    background: #fafcff;
 }
 
 .accounts-table td {
-    padding: 14px 16px;
-    color: #333;
+    padding: 18px 24px;
+    color: #34495e;
     vertical-align: middle;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+}
+
+.accounts-table td:nth-child(1) {
+    text-align: center;
+    font-weight: 600;
+    color: #1f3c88;
+}
+
+.accounts-table td:nth-child(2),
+.accounts-table td:nth-child(3) {
+    text-align: left;
+}
+
+.accounts-table td:nth-child(4) {
+    text-align: right;
+    font-weight: 700;
+    color: #1f3c88;
+    font-size: 15px;
 }
 
 .accounts-table td strong {
-    color: #1f3c88;
-    font-weight: 600;
-}
-
-.accounts-table tbody tr:last-child {
-    border-bottom: none;
+    font-weight: 700;
 }
 
 /* Divider */
@@ -514,16 +608,61 @@ hr {
     }
 
     .action-btn {
-        padding: 1rem 0.8rem;
-        gap: 0.6rem;
-    }
-
-    .btn-icon {
-        font-size: 1.8rem;
+        padding: 0.9rem 0.6rem;
+        gap: 0.5rem;
     }
 
     .btn-text {
         font-size: 0.8rem;
+    }
+
+    /* Mobile Card View for Table */
+    .accounts-table thead {
+        display: none;
+    }
+    
+    .accounts-table,
+    .accounts-table tbody,
+    .accounts-table tr,
+    .accounts-table td {
+        display: block;
+        width: 100%;
+    }
+    
+    .accounts-table tr {
+        margin-bottom: 15px;
+        border-radius: 12px;
+        border: 1px solid #e8eef7;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+    
+    .accounts-table td {
+        text-align: left !important;
+        padding: 12px 20px;
+        border-bottom: 1px solid #f0f3f8;
+        position: relative;
+        padding-left: 45%;
+    }
+    
+    .accounts-table td:last-child {
+        border-bottom: none;
+    }
+    
+    .accounts-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        color: #7f8c8d;
+        letter-spacing: 0.5px;
+    }
+
+    #viewall.section {
+        max-width: 98%;
+        padding: 25px 20px;
     }
 
     button {

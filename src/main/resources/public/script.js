@@ -5,6 +5,12 @@ function showSection(id) {
     document.querySelectorAll(".section")
         .forEach(section => section.style.display = "none");
     document.getElementById(id).style.display = "block";
+    
+    // Reset View All Accounts section to show placeholder
+    if (id === 'viewall') {
+        const resultDiv = document.getElementById("viewall-result");
+        resultDiv.innerHTML = '<div class="table-placeholder">Click \'Load Accounts\' to view all account details.</div>';
+    }
 }
 
 /* ---------------- AUTH ---------------- */
@@ -36,32 +42,19 @@ function createAccount() {
         balance: document.getElementById("c-balance").value
     };
 
-    const resultDiv = document.getElementById("create-result");
-
     fetch(BASE_URL + "/accounts/create", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
-    .then(res => {
-        if (res.status === 401) {
-            window.location.href = "/auth/login.html";
-            throw new Error("Unauthorized");
-        }
-        if (!res.ok) throw new Error("Server error");
-        return res.json();
-    })
+    .then(handleUnauthorized)
+    .then(res => res.json())
     .then(result => {
+        const resultDiv = document.getElementById("create-result");
         resultDiv.innerText = "Account created successfully. Account No: " + result.accountNumber;
         resultDiv.style.color = "#27ae60";
-        document.getElementById("c-name").value = "";
-        document.getElementById("c-email").value = "";
-        document.getElementById("c-balance").value = "";
     })
-    .catch(err => {
-        resultDiv.innerText = "Error: " + err.message;
-        resultDiv.style.color = "#ff4757";
-    });
+    .catch(err => console.error(err));
 }
 
 /* ---------------- DEPOSIT ---------------- */
@@ -71,29 +64,26 @@ function depositMoney() {
         amount: parseFloat(document.getElementById("d-amount").value)
     };
 
-    const resultDiv = document.getElementById("deposit-result");
-
     fetch(BASE_URL + "/accounts/deposit", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
+    .then(handleUnauthorized)
     .then(res => {
-        if (res.status === 401) {
-            window.location.href = "/auth/login.html";
-            throw new Error("Unauthorized");
+        if (!res.ok) {
+            return res.json().then(error => Promise.reject(error));
         }
-        if (!res.ok) throw new Error("Server error");
         return res.json();
     })
     .then(result => {
+        const resultDiv = document.getElementById("deposit-result");
         resultDiv.innerText = result.message;
         resultDiv.style.color = "#27ae60";
-        document.getElementById("d-acc").value = "";
-        document.getElementById("d-amount").value = "";
     })
     .catch(err => {
-        resultDiv.innerText = "Error: " + err.message;
+        const resultDiv = document.getElementById("deposit-result");
+        resultDiv.innerText = err.message || "Deposit failed";
         resultDiv.style.color = "#ff4757";
     });
 }
@@ -105,33 +95,27 @@ function withdrawMoney() {
         amount: parseFloat(document.getElementById("w-amount").value)
     };
 
-    const resultDiv = document.getElementById("withdraw-result");
-    console.log("Withdraw button clicked with data:", data);
-
     fetch(BASE_URL + "/accounts/withdraw", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
-    .then(res => {
-        console.log("Withdraw response status:", res.status);
-        if (res.status === 401) {
-            window.location.href = "/auth/login.html";
-            throw new Error("Unauthorized");
+    .then(handleUnauthorized)
+    .then(async response => {
+        const resultDiv = document.getElementById("withdraw-result");
+        const text = await response.text();
+        try {
+            const data = JSON.parse(text || "{}");
+            resultDiv.innerText = data.message || (response.ok ? "Withdraw successful" : "Withdraw failed");
+            resultDiv.style.color = response.ok ? "#27ae60" : "#ff4757";
+        } catch (e) {
+            resultDiv.innerText = "Insufficient balance or session expired. Please try again.";
+            resultDiv.style.color = "#ff4757";
         }
-        if (!res.ok) throw new Error("Server error: " + res.status);
-        return res.json();
-    })
-    .then(result => {
-        console.log("Withdraw result:", result);
-        resultDiv.innerText = result.message;
-        resultDiv.style.color = "#27ae60";
-        document.getElementById("w-acc").value = "";
-        document.getElementById("w-amount").value = "";
     })
     .catch(err => {
-        console.error("Withdraw error:", err);
-        resultDiv.innerText = "Error: " + err.message;
+        const resultDiv = document.getElementById("withdraw-result");
+        resultDiv.innerText = err.message || "Withdraw failed";
         resultDiv.style.color = "#ff4757";
     });
 }
@@ -144,34 +128,27 @@ function transferMoney() {
         amount: parseFloat(document.getElementById("t-amount").value)
     };
 
-    const resultDiv = document.getElementById("transfer-result");
-    console.log("Transfer button clicked with data:", data);
-
     fetch(BASE_URL + "/accounts/transfer", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(data)
     })
-    .then(res => {
-        console.log("Transfer response status:", res.status);
-        if (res.status === 401) {
-            window.location.href = "/auth/login.html";
-            throw new Error("Unauthorized");
+    .then(handleUnauthorized)
+    .then(async response => {
+        const resultDiv = document.getElementById("transfer-result");
+        const text = await response.text();
+        try {
+            const data = JSON.parse(text || "{}");
+            resultDiv.innerText = data.message || (response.ok ? "Transfer successful" : "Transfer failed");
+            resultDiv.style.color = response.ok ? "#27ae60" : "#ff4757";
+        } catch (e) {
+            resultDiv.innerText = "Insufficient balance or session expired. Please try again.";
+            resultDiv.style.color = "#ff4757";
         }
-        if (!res.ok) throw new Error("Server error: " + res.status);
-        return res.json();
-    })
-    .then(result => {
-        console.log("Transfer result:", result);
-        resultDiv.innerText = result.message;
-        resultDiv.style.color = "#27ae60";
-        document.getElementById("t-from-acc").value = "";
-        document.getElementById("t-to-acc").value = "";
-        document.getElementById("t-amount").value = "";
     })
     .catch(err => {
-        console.error("Transfer error:", err);
-        resultDiv.innerText = "Error: " + err.message;
+        const resultDiv = document.getElementById("transfer-result");
+        resultDiv.innerText = err.message || "Transfer failed";
         resultDiv.style.color = "#ff4757";
     });
 }
@@ -179,15 +156,30 @@ function transferMoney() {
 /* ---------------- VIEW ACCOUNT ---------------- */
 function viewAccount() {
     const accNo = document.getElementById("v-acc").value;
+    const resultDiv = document.getElementById("view-result");
+
+    if (!accNo) {
+        resultDiv.innerHTML = '<p style="text-align: center; color: #ff4757; font-weight: bold;">Please enter an account number</p>';
+        return;
+    }
 
     fetch(BASE_URL + "/accounts/" + accNo, {
         method: "GET",
         headers: { "Authorization": getToken() }
     })
-    .then(handleUnauthorized)
-    .then(res => res.json())
+    .then(res => {
+        if (res.status === 401) {
+            window.location.href = "/auth/login.html";
+            throw new Error("Unauthorized");
+        }
+        if (res.status === 404) {
+            throw new Error("Account not found");
+        }
+        if (!res.ok) throw new Error("Server error");
+        return res.json();
+    })
     .then(account => {
-        document.getElementById("view-result").innerHTML = `
+        const output = `
             <div class="account-detail-card">
                 <div class="detail-row">
                     <div class="detail-label">Account Number</div>
@@ -207,12 +199,18 @@ function viewAccount() {
                 </div>
             </div>
         `;
+        resultDiv.innerHTML = output;
+        document.getElementById("v-acc").value = "";
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        resultDiv.innerHTML = `<p style="text-align: center; color: #ff4757; font-weight: bold;">❌ ${err.message}</p>`;
+    });
 }
 
 /* ---------------- VIEW ALL ACCOUNTS ---------------- */
 function viewAllAccounts() {
+    const resultDiv = document.getElementById("viewall-result");
+    
     fetch(BASE_URL + "/accounts/all", {
         method: "GET",
         headers: { "Authorization": getToken() }
@@ -221,7 +219,7 @@ function viewAllAccounts() {
     .then(res => res.json())
     .then(accounts => {
         if (!accounts || accounts.length === 0) {
-            document.getElementById("viewall-result").innerHTML = '<p style="text-align: center; color: #999;">No accounts found.</p>';
+            resultDiv.innerHTML = '<div class="table-placeholder">No accounts found. Create an account to get started.</div>';
             return;
         }
         let output = `
@@ -240,16 +238,16 @@ function viewAllAccounts() {
         accounts.forEach((acc, index) => {
             output += `
                 <tr class="${index % 2 === 0 ? 'even' : 'odd'}">
-                    <td><strong>${acc.accountNumber}</strong></td>
-                    <td>${acc.holderName}</td>
-                    <td>${acc.email}</td>
-                    <td><strong>₹${acc.balance.toLocaleString()}</strong></td>
+                    <td data-label="Account No"><strong>${acc.accountNumber}</strong></td>
+                    <td data-label="Name">${acc.holderName}</td>
+                    <td data-label="Email">${acc.email}</td>
+                    <td data-label="Balance"><strong>₹${acc.balance.toLocaleString()}</strong></td>
                 </tr>
             `;
         });
 
         output += "</tbody></table>";
-        document.getElementById("viewall-result").innerHTML = output;
+        resultDiv.innerHTML = output;
     })
     .catch(err => console.error(err));
 }

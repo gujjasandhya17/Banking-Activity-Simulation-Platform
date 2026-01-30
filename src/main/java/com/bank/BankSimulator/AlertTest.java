@@ -21,15 +21,15 @@ public class AlertTest {
 		TransactionService trxService = new TransactionService(accountService,trxRepo,alertService);
 
 	
-//		try {
-//			Account account = accountService.createAccount("harikrishna", "harikrishnahh403@gmail.com", new BigDecimal("3000"));
-//			trxService.withdraw(account.getAccountNumber(),new BigDecimal("2500"));
-//			System.out.println("Amount is withdrawn Successfully..");
-//			System.out.println("Total Balance : "+account.getBalance());
-//			
-//		} catch (InvalidAmountException | AccountNotFoundException | InsufficientBalanceException e) {
-//			 
-//			e.printStackTrace();
-//		}
+		try {
+			Account account = accountService.createAccount("Test User", "17gsandhya@gmail.com", new BigDecimal("3000"));
+			trxService.withdraw(account.getAccountNumber(),new BigDecimal("2500"));
+			System.out.println("Amount is withdrawn Successfully..");
+			System.out.println("Total Balance : "+account.getBalance());
+			
+		} catch (InvalidAmountException | AccountNotFoundException | InsufficientBalanceException e) {
+			 
+			e.printStackTrace();
+		}
 	}
 }
