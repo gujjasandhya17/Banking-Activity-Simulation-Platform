@@ -123,10 +123,24 @@ function viewAccount() {
     .then(res => res.json())
     .then(account => {
         document.getElementById("view-result").innerHTML = `
-            Account Number: ${account.accountNumber}<br>
-            Holder Name: ${account.holderName}<br>
-            Email: ${account.email}<br>
-            Balance: ₹${account.balance}
+            <div class="account-detail-card">
+                <div class="detail-row">
+                    <div class="detail-label">Account Number</div>
+                    <div class="detail-value">${account.accountNumber}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Holder Name</div>
+                    <div class="detail-value">${account.holderName}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">${account.email}</div>
+                </div>
+                <div class="detail-row highlight">
+                    <div class="detail-label">Account Balance</div>
+                    <div class="detail-value balance">₹${account.balance.toLocaleString()}</div>
+                </div>
+            </div>
         `;
     })
     .catch(err => console.error(err));
@@ -141,28 +155,35 @@ function viewAllAccounts() {
     .then(handleUnauthorized)
     .then(res => res.json())
     .then(accounts => {
+        if (!accounts || accounts.length === 0) {
+            document.getElementById("viewall-result").innerHTML = '<p style="text-align: center; color: #999;">No accounts found.</p>';
+            return;
+        }
         let output = `
-            <table border="1" cellpadding="8">
-                <tr>
-                    <th>Account No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Balance</th>
-                </tr>
+            <table class="accounts-table">
+                <thead>
+                    <tr>
+                        <th>Account No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
         `;
 
-        accounts.forEach(acc => {
+        accounts.forEach((acc, index) => {
             output += `
-                <tr>
-                    <td>${acc.accountNumber}</td>
+                <tr class="${index % 2 === 0 ? 'even' : 'odd'}">
+                    <td><strong>${acc.accountNumber}</strong></td>
                     <td>${acc.holderName}</td>
                     <td>${acc.email}</td>
-                    <td>₹${acc.balance}</td>
+                    <td><strong>₹${acc.balance.toLocaleString()}</strong></td>
                 </tr>
             `;
         });
 
-        output += "</table>";
+        output += "</tbody></table>";
         document.getElementById("viewall-result").innerHTML = output;
     })
     .catch(err => console.error(err));

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="dashboard-page">
 
 <script>
     // 🔐 Auth check AFTER body starts
@@ -16,19 +16,52 @@
     }
 </script>
 
-<h1>Welcome to the Banking Simulator</h1>
-<p>This is a simple banking simulation application.</p>
+<nav class="navbar">
+    <div class="navbar-left">
+        <div class="bank-logo">🏦</div>
+        <div class="navbar-brand">Banking Simulator</div>
+    </div>
+    <div class="navbar-right">
+        <button class="nav-btn btn-logout" onclick="handleLogout()">Logout</button>
+    </div>
+</nav>
 
-<div class="button-container">
-    <button onclick="showSection('create')">Create Account</button>
-    <button onclick="showSection('deposit')">Deposit Funds</button>
-    <button onclick="showSection('withdraw')">Withdraw Funds</button>
-    <button onclick="showSection('transfer')">Transfer Funds</button>   
-    <button onclick="showSection('view')">View Account Details</button>
-    <button onclick="showSection('viewall')">View All Account</button>
-</div>
+<main class="dashboard-content">
+    <!-- Welcome Section -->
+    <div class="welcome-header">
+        <h1>Welcome to the Banking Simulator</h1>
+        <p>This is a simple banking simulation application.</p>
+    </div>
 
-<hr>
+    <!-- Action Buttons Grid -->
+    <div class="action-grid">
+        <button class="action-btn" onclick="showSection('create')">
+            <span class="btn-icon">➕</span>
+            <span class="btn-text">Create Account</span>
+        </button>
+        <button class="action-btn" onclick="showSection('deposit')">
+            <span class="btn-icon">💰</span>
+            <span class="btn-text">Deposit Funds</span>
+        </button>
+        <button class="action-btn" onclick="showSection('withdraw')">
+            <span class="btn-icon">💸</span>
+            <span class="btn-text">Withdraw Funds</span>
+        </button>
+        <button class="action-btn" onclick="showSection('transfer')">
+            <span class="btn-icon">🔄</span>
+            <span class="btn-text">Transfer Funds</span>
+        </button>
+        <button class="action-btn" onclick="showSection('view')">
+            <span class="btn-icon">👁️</span>
+            <span class="btn-text">View Account Details</span>
+        </button>
+        <button class="action-btn" onclick="showSection('viewall')">
+            <span class="btn-icon">📊</span>
+            <span class="btn-text">View All Accounts</span>
+        </button>
+    </div>
+
+    <hr>
 
 <div id="create" class="section">
     <h2>Create Account</h2>
@@ -68,15 +101,22 @@
     <h2>View Account Details</h2>
     <input id="v-acc" placeholder="Account Number"><br>
     <button onclick="viewAccount()">Submit</button>
-    <pre id="view-result"></pre>
+    <div id="view-result" class="account-details-container"></div>
 </div>
 
 <div id="viewall" class="section">
     <h2>View All Accounts</h2>
     <button onclick="viewAllAccounts()">Load Accounts</button>
-    <pre id="viewall-result"></pre>
+    <div id="viewall-result" class="table-container"></div>
 </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function handleLogout() {
+            localStorage.removeItem("authToken");
+            window.location.href = "/index.html";
+        }
+    </script>
+</main>
 </body>
 </html>

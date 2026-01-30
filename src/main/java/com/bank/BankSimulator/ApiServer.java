@@ -1,24 +1,21 @@
 package com.bank.BankSimulator;
-import com.bank.BankSimulator.auth.AuthController;
-import com.bank.BankSimulator.util.AuthFilter;
+import static spark.Spark.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
+import java.util.Collections;
 
-import static spark.Spark.*;
-
-import com.bank.BankSimulator.repository.AccountRepository;
-import com.bank.BankSimulator.repository.TransactionRepository;
+import com.bank.BankSimulator.auth.AuthController;
 import com.bank.BankSimulator.exception.AccountNotFoundException;
 import com.bank.BankSimulator.model.Account;
+import com.bank.BankSimulator.repository.AccountRepository;
+import com.bank.BankSimulator.repository.TransactionRepository;
 import com.bank.BankSimulator.service.AccountService;
 import com.bank.BankSimulator.service.AlertService;
 import com.bank.BankSimulator.service.TransactionService;
+import com.bank.BankSimulator.util.AuthFilter;
 import com.google.gson.Gson;
-
-import spark.Route;
 
 public class ApiServer {
 	
@@ -75,7 +72,7 @@ public class ApiServer {
             trxService.deposit(data.accNo, data.amount);
 
             return gson.toJson(
-                Map.of("message", "Deposit successful")
+                Collections.singletonMap("message", "Deposit successful")
             );
         });
 
@@ -85,7 +82,7 @@ public class ApiServer {
     	   TxRequest data = gson.fromJson(req.body(), TxRequest.class);
     	   trxService.withdraw(data.accNo, data.amount);
     	   return gson.toJson(
-                   Map.of("message", "Withdraw successful")
+                   Collections.singletonMap("message", "Withdraw successful")
                );
     	   
        });
@@ -98,7 +95,7 @@ public class ApiServer {
 		   trxService.transfer(data.fromAcc, data.toAcc, data.amount);
 		   
 		   return gson.toJson(
-                   Map.of("message", "Transfer successful")
+                   Collections.singletonMap("message", "Transfer successful")
                );
        });
        
@@ -108,9 +105,8 @@ public class ApiServer {
     	        Collection<Account> accounts = accountService.listAll();
     	        return gson.toJson(new ArrayList<>(accounts));
     	    } catch (Exception e) {
-    	        e.printStackTrace();
     	        res.status(500);
-    	        return gson.toJson(Map.of("error", e.getMessage()));
+    	        return gson.toJson(Collections.singletonMap("error", e.getMessage()));
     	    }
     	});
        
@@ -125,7 +121,7 @@ public class ApiServer {
     	        return gson.toJson(account);
     	    } catch (AccountNotFoundException e) {
     	        res.status(404);
-    	        return gson.toJson(Map.of("error", e.getMessage()));
+    	        return gson.toJson(Collections.singletonMap("error", e.getMessage()));
     	    }
        });
        
