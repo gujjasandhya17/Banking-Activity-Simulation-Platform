@@ -1,16 +1,62 @@
 const BASE_URL = "";
 
+// Sorting state for View All Accounts
+let accountsSortState = {
+    sortBy: 'name', // default sort by name
+    ascending: true
+};
+
 /* ---------------- UI HELPERS ---------------- */
 function showSection(id) {
     document.querySelectorAll(".section")
         .forEach(section => section.style.display = "none");
     document.getElementById(id).style.display = "block";
     
+    // Clear all response messages when switching sections
+    const responseElements = [
+        'create-result',
+        'deposit-result',
+        'withdraw-result',
+        'transfer-result',
+        'view-result'
+    ];
+    responseElements.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.innerText = "";
+        }
+    });
+    
+    // Clear all form inputs when switching sections
+    const formInputs = [
+        'c-name', 'c-email', 'c-balance',           // Create Account
+        'd-acc', 'd-amount',                          // Deposit
+        'w-acc', 'w-amount',                          // Withdraw
+        't-from-acc', 't-to-acc', 't-amount',        // Transfer
+        'v-acc'                                       // View Account
+    ];
+    formInputs.forEach(inputId => {
+        const element = document.getElementById(inputId);
+        if (element) {
+            element.value = "";
+        }
+    });
+    
     // Reset View All Accounts section to show placeholder
     if (id === 'viewall') {
         const resultDiv = document.getElementById("viewall-result");
         resultDiv.innerHTML = '<div class="table-placeholder">Click \'Load Accounts\' to view all account details.</div>';
     }
+}
+
+// Helper function to clear/reset form inputs
+function clearForm(inputIds) {
+    inputIds.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.value = "";
+        }
+    });
 }
 
 /* ---------------- AUTH ---------------- */
@@ -53,6 +99,9 @@ function createAccount() {
         const resultDiv = document.getElementById("create-result");
         resultDiv.innerText = "Account created successfully. Account No: " + result.accountNumber;
         resultDiv.style.color = "#27ae60";
+        
+        // Clear form inputs after successful submission
+        clearForm(["c-name", "c-email", "c-balance"]);
     })
     .catch(err => console.error(err));
 }
@@ -80,6 +129,9 @@ function depositMoney() {
         const resultDiv = document.getElementById("deposit-result");
         resultDiv.innerText = result.message;
         resultDiv.style.color = "#27ae60";
+        
+        // Clear form inputs after successful submission
+        clearForm(["d-acc", "d-amount"]);
     })
     .catch(err => {
         const resultDiv = document.getElementById("deposit-result");
@@ -108,6 +160,11 @@ function withdrawMoney() {
             const data = JSON.parse(text || "{}");
             resultDiv.innerText = data.message || (response.ok ? "Withdraw successful" : "Withdraw failed");
             resultDiv.style.color = response.ok ? "#27ae60" : "#ff4757";
+            
+            // Clear form inputs after successful submission
+            if (response.ok) {
+                clearForm(["w-acc", "w-amount"]);
+            }
         } catch (e) {
             resultDiv.innerText = "Insufficient balance or session expired. Please try again.";
             resultDiv.style.color = "#ff4757";
@@ -141,6 +198,11 @@ function transferMoney() {
             const data = JSON.parse(text || "{}");
             resultDiv.innerText = data.message || (response.ok ? "Transfer successful" : "Transfer failed");
             resultDiv.style.color = response.ok ? "#27ae60" : "#ff4757";
+            
+            // Clear form inputs after successful submission
+            if (response.ok) {
+                clearForm(["t-from-acc", "t-to-acc", "t-amount"]);
+            }
         } catch (e) {
             resultDiv.innerText = "Insufficient balance or session expired. Please try again.";
             resultDiv.style.color = "#ff4757";
@@ -222,32 +284,102 @@ function viewAllAccounts() {
             resultDiv.innerHTML = '<div class="table-placeholder">No accounts found. Create an account to get started.</div>';
             return;
         }
-        let output = `
-            <table class="accounts-table">
-                <thead>
-                    <tr>
-                        <th>Account No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        accounts.forEach((acc, index) => {
-            output += `
-                <tr class="${index % 2 === 0 ? 'even' : 'odd'}">
-                    <td data-label="Account No"><strong>${acc.accountNumber}</strong></td>
-                    <td data-label="Name">${acc.holderName}</td>
-                    <td data-label="Email">${acc.email}</td>
-                    <td data-label="Balance"><strong>₹${acc.balance.toLocaleString()}</strong></td>
-                </tr>
-            `;
-        });
-
-        output += "</tbody></table>";
-        resultDiv.innerHTML = output;
+        
+        // Sort accounts by default (by name ascending)
+        sortAccounts(accounts);
+        
+        // Render the table with sort controls
+        renderAccountsTable(accounts);
     })
     .catch(err => console.error(err));
+}
+
+// Function to sort accounts based on current sort state
+function sortAccounts(accounts) {
+    accounts.sort((a, b) => {
+        let valueA, valueB;
+        
+        if (accountsSortState.sortBy === 'name') {
+            valueA = a.holderName.toLowerCase();
+            valueB = b.holderName.toLowerCase();
+        } else if (accountsSortState.sortBy === 'accNo') {
+            valueA = parseInt(a.accountNumber);
+            valueB = parseInt(b.accountNumber);
+        }
+        
+        if (valueA < valueB) {
+            return accountsSortState.ascending ? -1 : 1;
+        } else if (valueA > valueB) {
+            return accountsSortState.ascending ? 1 : -1;
+        }
+        return 0;
+    });
+}
+
+// Function to render the accounts table with sort controls
+function renderAccountsTable(accounts) {
+    const resultDiv = document.getElementById("viewall-result");
+    
+    // Determine sort indicator for headers
+    const nameIndicator = accountsSortState.sortBy === 'name' 
+        ? (accountsSortState.ascending ? ' ▲' : ' ▼') 
+        : '';
+    const accNoIndicator = accountsSortState.sortBy === 'accNo' 
+        ? (accountsSortState.ascending ? ' ▲' : ' ▼') 
+        : '';
+    
+    let output = `
+        <div class="sort-controls">
+            <button class="sort-btn ${accountsSortState.sortBy === 'name' ? 'active' : ''}" onclick="changeSortBy('name')">
+                Sort by Name${nameIndicator}
+            </button>
+            <button class="sort-btn ${accountsSortState.sortBy === 'accNo' ? 'active' : ''}" onclick="changeSortBy('accNo')">
+                Sort by Account No${accNoIndicator}
+            </button>
+        </div>
+        <table class="accounts-table">
+            <thead>
+                <tr>
+                    <th onclick="toggleSort('accNo')">Account No</th>
+                    <th onclick="toggleSort('name')">Name</th>
+                    <th>Email</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    accounts.forEach((acc, index) => {
+        output += `
+            <tr class="${index % 2 === 0 ? 'even' : 'odd'}">
+                <td data-label="Account No"><strong>${acc.accountNumber}</strong></td>
+                <td data-label="Name">${acc.holderName}</td>
+                <td data-label="Email">${acc.email}</td>
+                <td data-label="Balance"><strong>₹${acc.balance.toLocaleString()}</strong></td>
+            </tr>
+        `;
+    });
+
+    output += "</tbody></table>";
+    resultDiv.innerHTML = output;
+}
+
+// Function to change sort by field
+function changeSortBy(sortBy) {
+    if (accountsSortState.sortBy === sortBy) {
+        // If clicking the same sort button, toggle ascending/descending
+        accountsSortState.ascending = !accountsSortState.ascending;
+    } else {
+        // If clicking a different sort button, set it as primary sort (ascending)
+        accountsSortState.sortBy = sortBy;
+        accountsSortState.ascending = true;
+    }
+    
+    // Re-fetch and re-render with new sort
+    viewAllAccounts();
+}
+
+// Function to toggle sort (called from table headers)
+function toggleSort(sortBy) {
+    changeSortBy(sortBy);
 }

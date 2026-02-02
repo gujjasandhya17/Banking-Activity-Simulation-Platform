@@ -1,8 +1,9 @@
 package com.bank.BankSimulator.service;
 
 import java.math.BigDecimal;
-import com.bank.BankSimulator.util.EmailUtil;
+
 import com.bank.BankSimulator.model.Account;
+import com.bank.BankSimulator.util.EmailUtil;
 
 public class AlertService {
 	private final BigDecimal threshold;
@@ -16,7 +17,7 @@ public class AlertService {
 	{
 		if(account.getBalance().compareTo(threshold)<=0)
 		{
-			String subject = "⚠ Low Balance Alert – Account " + account.getAccountNumber();
+			String subject = "｡°⚠︎°｡ Low Balance Alert – Account " + account.getAccountNumber();
 			String message =
 			        "Dear " + account.getHolderName() + ",\n\n"
 			      + "This is a friendly reminder that your account balance has fallen below the minimum threshold.\n\n"
